@@ -5,8 +5,8 @@
 #include "libCamera\OV7670.h"
 #include "libCamera\BMP.h"
 
-#define SSID  "Beeline_MF"  // "ZyXEL_KEENETIC_MF"
-#define PASS  "$@ndr0nix"   // "zyxel-592-yqz"
+#define SSID  "ZyXEL_KEENETIC_MF"  // "Beeline_MF"
+#define PASS  "zyxel-592-yqz"      // "$@ndr0nix"
 
 // OV7670 pins connection
 const int SIOD = 21; //SDA
@@ -49,11 +49,13 @@ void serve()
           {
             client.println("HTTP/1.1 200 OK");
             client.println("Content-type:text/html");
-            client.println();                   //CHANGED 50% and auto margin
+            client.println();
             client.print(
-              "<style>body{margin: 0}\nimg{height: 50%; width: auto; margin-left: auto; margin-right: auto}</style>"
-              "<img id='a' src='/camera' onload='this.style.display=\"initial\"; var b = document.getElementById(\"b\"); b.style.display=\"none\"; b.src=\"camera?\"+Date.now(); '>"
-              "<img id='b' style='display: none' src='/camera' onload='this.style.display=\"initial\"; var a = document.getElementById(\"a\"); a.style.display=\"none\"; a.src=\"camera?\"+Date.now(); '>");
+              "<style> body { margin: 0; }\nimg { height: 50%; width: auto; margin-left: auto; margin-right: auto; } </style>"
+              "<script> var i = 1; </script>"
+              "<img id='a' src='/camera' onload='this.style.display=\"initial\"; var b = document.getElementById(\"b\"); b.style.display=\"none\"; b.src=\"camera?\" + (i++); '>"
+              "<img id='b' style='display: none' src='/camera' onload='this.style.display=\"initial\"; var a = document.getElementById(\"a\"); a.style.display=\"none\"; a.src=\"camera?\" + (i++); '>"
+            );
             client.println();
             break;
           } 
